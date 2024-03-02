@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useMutation } from "convex/react";
+import { Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -11,35 +12,34 @@ import { toast } from "sonner";
 
 function CreateTeam() {
   const [teamName, setTeamName] = useState("");
+  const createTeam = useMutation(api.teams.createTeam);
   const { user }: any = useKindeBrowserClient();
   const router = useRouter();
-
-  const createTeam = useMutation(api.teams.createTeam);
   const createNewTeam = () => {
     createTeam({
-      TeamName: teamName,
-      CreatedBy: user?.email,
-    }).then((response) => {
-      console.log(response);
-      if (response) {
+      teamName: teamName,
+      createdBy: user?.email,
+    }).then((resp) => {
+      console.log(resp);
+      if (resp) {
         router.push("/dashboard");
-        toast("Team Created Successfully👍");
+        toast("Team created successfully!!!");
       }
     });
   };
-
   return (
-    <>
-      <div className="md:px-16 px-1 py-10 flex flex-row gap-2 items-center justify-center">
-        <Image src="/logo.svg" alt="logo" width={55} height={55} />
-        <p className="text-4xl font-extralight uppercase hidden md:block">
-          canvas
-        </p>
+    <div className=" px-6 md:px-16 my-16">
+      <div className="flex items-center gap-2">
+        <Image src="/logo.svg" alt="logo" width={50} height={50} />
+        <p className="text-2xl font-extralight">canvas</p>
       </div>
-      <div className="flex flex-col items-center px-2 mt-16">
-        <div className="rounded-md flex flex-row items-center gap-2 bg-green-300 px-4 text-slate-600 my-4">
-          <Image src="/team.png" width={30} height={30} alt="team" />
-          <p className=" text-sm">Team Name</p>
+
+      <div className="flex flex-col items-center mt-8 gap-4">
+        <div className="rounded-full px-3 py-2 flex flex-row justify-center items-center w-[200px] bg-green-300">
+          <h1>
+            <Users />{" "}
+          </h1>
+          <p> | create team</p>
         </div>
         <h2 className="font-bold text-[40px] py-3">
           What should we call your team?
@@ -47,23 +47,23 @@ function CreateTeam() {
         <h2 className="text-gray-500">
           You can always change this later from settings.
         </h2>
-        <div className="mt-7 w-[40%] flex flex-col items-center">
+        <div className="mt-7 w-[40%]">
           <label className="text-gray-500">Team Name</label>
           <Input
             placeholder="Team Name"
-            className="mt-3 md:w-[70%] lg:w-1/2"
+            className="mt-3"
             onChange={(e) => setTeamName(e.target.value)}
           />
         </div>
         <Button
-          className="bg-blue-500 mt-9 w-1/6 hover:bg-blue-600 rounded-sm"
-          disabled={!(teamName && teamName.length > 0)}
+          className="bg-blue-500 mt-9 w-[30%] hover:bg-blue-600"
+          disabled={!(teamName && teamName?.length > 0)}
           onClick={() => createNewTeam()}
         >
           Create Team
         </Button>
       </div>
-    </>
+    </div>
   );
 }
 
