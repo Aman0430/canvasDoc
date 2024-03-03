@@ -35,6 +35,10 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
       icon: Settings,
     },
   ];
+
+  useEffect(() => {
+    activeTeam && setActiveTeamInfo(activeTeam);
+  }, [activeTeam]);
   const router = useRouter();
   const convex = useConvex();
   useEffect(() => {

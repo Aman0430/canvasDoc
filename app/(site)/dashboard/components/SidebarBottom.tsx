@@ -1,9 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Archive, Flag, Github, Plus } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { DialogClose } from "@radix-ui/react-dialog";
 
-function SidebarBottom() {
+function SidebarBottom({ onFileCreate }: any) {
   const menuList = [
     {
       id: 1,
@@ -15,7 +27,7 @@ function SidebarBottom() {
       id: 2,
       name: "Github",
       icon: Github,
-      path: "https://github.com/Aman0430/canvasDoc",
+      path: "",
     },
     {
       id: 3,
@@ -33,6 +45,8 @@ function SidebarBottom() {
   const d = line > 60 && line <= 100;
   const e = line > 80 && line <= 100;
 
+  const [fileNameInput, setFileNameInput] = useState("");
+
   return (
     <div>
       {menuList.map((item, index) => (
@@ -44,10 +58,47 @@ function SidebarBottom() {
           {item.name}
         </h2>
       ))}
-      <Button className="mt-3 bg-blue-500 gap-1 hover:bg-blue-600 rounded-md cursor-pointer justify-between items-center flex w-full">
-        New File
-        <Plus />
-      </Button>
+      <Dialog>
+        <DialogTrigger className="w-full" asChild>
+          <div className="mt-3 bg-blue-500 gap-1 hover:bg-blue-600 rounded-md cursor-pointer justify-between items-center flex w-full text-white p-2 text-sm">
+            New File
+            <Plus />
+          </div>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create File</DialogTitle>
+            <DialogDescription>
+              Make changes to create your file. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4 justify-start">
+            <div className="grid grid-cols-4 items-center text-left gap-4">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                placeholder="Enter File Name"
+                className="col-span-3"
+                onChange={(e) => setFileNameInput(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter className="justify-end">
+            <DialogClose asChild>
+              <Button
+                type="submit"
+                variant="default"
+                disabled={!(fileNameInput && fileNameInput.length > 3)}
+                onClick={() => {
+                  onFileCreate(fileNameInput);
+                }}
+              >
+                Confirm
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <div className="gap-1 flex h-2 grid-rows-5 mt-1">
         <div
           className={`bg-blue-300 rounded-sm w-full ${a && "bg-red-500"}`}
