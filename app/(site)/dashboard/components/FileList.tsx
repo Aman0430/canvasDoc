@@ -3,13 +3,14 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
-import { Archive, MoreHorizontalIcon } from "lucide-react";
+import { Archive, MoreHorizontalIcon, NotepadText } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 export interface FILE {
   archive: boolean;
@@ -26,6 +27,7 @@ function FileList() {
   const { fileList, setFileList } = useContext(FileContext);
   const [fileListt, setFileListt] = useState<any>();
   const { user }: any = useKindeBrowserClient();
+  const router = useRouter();
 
   useEffect(() => {
     fileList && setFileListt(fileList);
@@ -49,7 +51,10 @@ function FileList() {
             {fileListt &&
               fileListt.map((file: FILE, index: number) => (
                 <tr className="odd:bg-gray-50" key={index}>
-                  <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-600">
+                  <td
+                    className="whitespace-nowrap px-4 py-2 font-medium cursor-pointer text-gray-600"
+                    onClick={() => router.push(`/workspace/${file._id}`)}
+                  >
                     {file.fileName}
                   </td>
                   <td className="whitespace-nowrap px-4 py-2 text-gray-600">
@@ -78,6 +83,12 @@ function FileList() {
                       <DropdownMenuContent>
                         <DropdownMenuItem className="gap-3">
                           <Archive className="h-4 w-4" /> Archive
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="gap-3"
+                          onClick={() => router.push(`/workspace/${file._id}`)}
+                        >
+                          <NotepadText className="h-4 w-4" /> Open
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
