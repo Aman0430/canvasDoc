@@ -150,7 +150,7 @@ function SideNavTopSection({ user, setActiveTeamInfo }: any) {
       <Button
         variant="outline"
         className="w-full justify-start
-          gap-2 font-bold mt-8 bg-gray-100"
+          gap-2 font-bold mt-8 border-gray-300 bg-white"
       >
         <LayoutGrid className="h-5 w-5" />
         All Files

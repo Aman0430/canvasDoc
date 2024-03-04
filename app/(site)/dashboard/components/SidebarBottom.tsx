@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 
-function SidebarBottom({ onFileCreate }: any) {
+function SidebarBottom({ onFileCreate, totalFiles }: any) {
   const menuList = [
     {
       id: 1,
@@ -36,7 +36,7 @@ function SidebarBottom({ onFileCreate }: any) {
       path: "/getting-started",
     },
   ];
-  const totalFiles = 4;
+
   const line = (totalFiles / 5) * 100;
 
   const a = line > 0 && line <= 100;

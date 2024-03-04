@@ -5,6 +5,8 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useConvex, useMutation, useQuery } from "convex/react";
 import React, { useEffect } from "react";
+import HeaderDash from "./components/HeaderDash";
+import FileList from "./components/FileList";
 
 function page() {
   const convex = useConvex();
@@ -37,9 +39,8 @@ function page() {
 
   return (
     <div>
-      <Button>
-        <LogoutLink>Logout</LogoutLink>
-      </Button>
+      <HeaderDash />
+      <FileList />
     </div>
   );
 }
