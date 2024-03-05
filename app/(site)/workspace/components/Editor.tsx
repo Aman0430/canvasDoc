@@ -13,6 +13,9 @@ import SimpleImage from "@editorjs/simple-image";
 import CodeTool from "@editorjs/code";
 //@ts-ignore
 import InlineCode from "@editorjs/inline-code";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
 
 const rawDocument = {
   time: 1550476186479,
@@ -36,13 +39,43 @@ const rawDocument = {
   version: "2.8.1",
 };
 
-function Editor() {
+function Editor({ onSaveTrigger, fileId }: any) {
   const ref = useRef<EditorJS>();
   const [document, setDocument] = useState(rawDocument);
+  const updateDocument = useMutation(api.files.updateDocument);
 
   useEffect(() => {
     initEditor();
   }, []);
+
+  useEffect(() => {
+    onSaveTrigger && onSaveDoc();
+    console.log("trigger value: ", onSaveTrigger);
+  }, [onSaveTrigger]);
+
+  const onSaveDoc = () => {
+    if (ref.current) {
+      ref.current
+        .save()
+        .then((outputData) => {
+          console.log("Article data: ", outputData);
+          updateDocument({
+            _id: fileId,
+            document: JSON.stringify(outputData),
+          }).then(
+            (response) => {
+              toast("Document updated successfully!");
+            },
+            (e) => {
+              toast("Error while updating document!");
+            }
+          );
+        })
+        .catch((error) => {
+          console.log("Saving failed: ", error);
+        });
+    }
+  };
 
   const initEditor = () => {
     const editor = new EditorJS({
