@@ -1,18 +1,15 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { useConvex, useMutation, useQuery } from "convex/react";
+import { useConvex, useMutation } from "convex/react";
 import React, { useEffect } from "react";
 import HeaderDash from "./components/HeaderDash";
 import FileList from "./components/FileList";
 
-function page() {
+function Dashboard() {
   const convex = useConvex();
 
   const { user }: any = useKindeBrowserClient();
-  // const getUser = useQuery(api.user.getUser, { email: user?.email });
 
   const createUser = useMutation(api.user.createUser);
 
@@ -45,4 +42,4 @@ function page() {
   );
 }
 
-export default page;
+export default Dashboard;

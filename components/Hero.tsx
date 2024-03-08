@@ -14,7 +14,7 @@ const HeroSection = () => {
             px-3 p-2 rounded-full
         text-center border-white"
         >
-          See What's New | <span className="text-sky-300">AI Diagram</span>
+          See What&apos;s New | <span className="text-sky-300">AI Diagram</span>
         </h2>
       </div>
       <div className="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:items-center">
