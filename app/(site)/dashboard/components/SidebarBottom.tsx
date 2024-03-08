@@ -72,7 +72,7 @@ function SidebarBottom({ onFileCreate, totalFiles }: any) {
             <DialogHeader>
               <DialogTitle>Create File</DialogTitle>
               <DialogDescription>
-                Make changes to create your file. Click save when you're done.
+                Make changes to create your file. Click save when you are done.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4 justify-start">
