@@ -105,7 +105,7 @@ function SidebarBottom({ onFileCreate, totalFiles }: any) {
         )}
       </Dialog>
 
-      <div className="gap-1 flex h-2 grid-rows-5 mt-1">
+      {/* <div className="gap-1 flex h-2 grid-rows-5 mt-1">
         <div
           className={`bg-blue-300 rounded-sm w-full ${a && "bg-red-500"}`}
         ></div>
@@ -126,7 +126,21 @@ function SidebarBottom({ onFileCreate, totalFiles }: any) {
         <strong>{totalFiles}</strong> out of{" "}
         <strong>{Constants.MAX_FREE_TIER}</strong> file is used
       </h2>
-      <p className="text-[12px] mt-1">Upgrade your plan for further access</p>
+      <p className="text-[12px] mt-1">Upgrade your plan for further access</p> */}
+      <div className="h-4 w-full bg-gray-200 rounded-full mt-5">
+        <div
+          className={`h-4  bg-blue-600 rounded-full`}
+          style={{ width: `${(totalFiles / 5) * 100}%` }}
+        ></div>
+      </div>
+
+      <h2 className="text-[12px] mt-3">
+        <strong>{totalFiles}</strong> out of{" "}
+        <strong>{Constants.MAX_FREE_TIER}</strong> files used
+      </h2>
+      <h2 className="text-[12px] mt-1">
+        Upgrade your plan for unlimited access.
+      </h2>
     </div>
   );
 }
