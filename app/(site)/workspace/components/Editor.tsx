@@ -122,7 +122,7 @@ function Editor({
     });
     ref.current = editor;
   };
-  return <div id="editorjs" className="h-screen bg-yellow-100"></div>;
+  return <div id="editorjs" className="h-screen bg-[#fffce8]"></div>;
 }
 
 export default Editor;

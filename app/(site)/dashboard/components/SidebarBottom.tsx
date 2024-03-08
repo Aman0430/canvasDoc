@@ -14,6 +14,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
+import Constants from "@/Constants/Constants";
+import PricingSection from "./PricingSection";
 
 function SidebarBottom({ onFileCreate, totalFiles }: any) {
   const menuList = [
@@ -65,38 +67,42 @@ function SidebarBottom({ onFileCreate, totalFiles }: any) {
             <Plus />
           </div>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Create File</DialogTitle>
-            <DialogDescription>
-              Make changes to create your file. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4 justify-start">
-            <div className="grid grid-cols-4 items-center text-left gap-4">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                placeholder="Enter File Name"
-                className="col-span-3"
-                onChange={(e) => setFileNameInput(e.target.value)}
-              />
+        {totalFiles < Constants.MAX_FREE_TIER ? (
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Create File</DialogTitle>
+              <DialogDescription>
+                Make changes to create your file. Click save when you're done.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4 justify-start">
+              <div className="grid grid-cols-4 items-center text-left gap-4">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  placeholder="Enter File Name"
+                  className="col-span-3"
+                  onChange={(e) => setFileNameInput(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
-          <DialogFooter className="justify-end">
-            <DialogClose asChild>
-              <Button
-                type="submit"
-                variant="default"
-                disabled={!(fileNameInput && fileNameInput.length > 3)}
-                onClick={() => {
-                  onFileCreate(fileNameInput);
-                }}
-              >
-                Confirm
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
+            <DialogFooter className="justify-end">
+              <DialogClose asChild>
+                <Button
+                  type="submit"
+                  variant="default"
+                  disabled={!(fileNameInput && fileNameInput.length > 3)}
+                  onClick={() => {
+                    onFileCreate(fileNameInput);
+                  }}
+                >
+                  Confirm
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        ) : (
+          <PricingSection />
+        )}
       </Dialog>
 
       <div className="gap-1 flex h-2 grid-rows-5 mt-1">
@@ -117,7 +123,8 @@ function SidebarBottom({ onFileCreate, totalFiles }: any) {
         ></div>
       </div>
       <h2 className="text-[12px] mt-3">
-        <strong>{totalFiles}</strong> out of <strong>5</strong> file is used
+        <strong>{totalFiles}</strong> out of{" "}
+        <strong>{Constants.MAX_FREE_TIER}</strong> file is used
       </h2>
       <p className="text-[12px] mt-1">Upgrade your plan for further access</p>
     </div>

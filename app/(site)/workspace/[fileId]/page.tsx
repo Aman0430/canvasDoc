@@ -43,7 +43,11 @@ function WorkSpace({ params }: any) {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel className="min-w-[40rem]">
-          <WhiteBoard />
+          <WhiteBoard
+            onSaveTrigger={triggerSave}
+            fileId={params.fileId}
+            fileData={fileData}
+          />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
